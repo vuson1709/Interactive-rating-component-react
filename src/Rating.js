@@ -4,19 +4,30 @@
 - Select and submit a number rating
 - See the "Thank you" card state after submitting a rating
  */
+import { useState } from "react";
 import IconStar from "./images/icon-star.svg";
 import ImgThankYou from "./images/illustration-thank-you.svg";
 
 export default function Rating() {
+  const [rating, setRating] = useState(null);
+  const [actualRating, setActualRating] = useState(null);
+
   return (
     <div className="rating">
-      {/* <DisplayRating /> */}
-      <DisplayThankYou />
+      {actualRating ? (
+        <DisplayThankYou actualRating={actualRating} />
+      ) : (
+        <DisplayRating
+          rating={rating}
+          setRating={setRating}
+          setActualRating={setActualRating}
+        />
+      )}
     </div>
   );
 }
 
-function DisplayRating() {
+function DisplayRating({ rating, setRating, setActualRating }) {
   return (
     <>
       <div className="circle">
@@ -28,17 +39,21 @@ function DisplayRating() {
         appreciated to help us improve our offering!
       </p>
 
-      <Numbers />
-      <button className="btn submit">Submit</button>
+      <Numbers rating={rating} setRating={setRating} />
+      <button className="btn submit" onClick={() => setActualRating(rating)}>
+        Submit
+      </button>
     </>
   );
 }
 
-function DisplayThankYou() {
+function DisplayThankYou({ actualRating }) {
   return (
     <div className="thank-you">
       <img src={ImgThankYou} alt="Thank you" />
-      <span className="star-selected">You selected [X] out of 5</span>
+      <span className="star-selected">
+        You selected {actualRating} out of 5
+      </span>
       <h2>Thank you!</h2>
       <p>
         We appreciate you taking the time to give a rating. If you ever need
@@ -48,14 +63,39 @@ function DisplayThankYou() {
   );
 }
 
-function Numbers() {
+function Numbers({ rating, setRating }) {
   return (
-    <div className="numbers">
-      <span className="circle">1</span>
-      <span className="circle">2</span>
-      <span className="circle">3</span>
-      <span className="circle">4</span>
-      <span className="circle">5</span>
-    </div>
+    <form className="numbers">
+      <span
+        className={`circle ${rating === 1 ? "active" : ""}`}
+        onClick={() => setRating(1)}
+      >
+        1
+      </span>
+      <span
+        className={`circle ${rating === 2 ? "active" : ""}`}
+        onClick={() => setRating(2)}
+      >
+        2
+      </span>
+      <span
+        className={`circle ${rating === 3 ? "active" : ""}`}
+        onClick={() => setRating(3)}
+      >
+        3
+      </span>
+      <span
+        className={`circle ${rating === 4 ? "active" : ""}`}
+        onClick={() => setRating(4)}
+      >
+        4
+      </span>
+      <span
+        className={`circle ${rating === 5 ? "active" : ""}`}
+        onClick={() => setRating(5)}
+      >
+        5
+      </span>
+    </form>
   );
 }
