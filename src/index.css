@@ -60,6 +60,12 @@ p {
   margin-bottom: 35px;
 }
 
+@media only screen and (max-width: 375px) {
+  .circle {
+    margin-bottom: 20px;
+  }
+}
+
 /*=============== RATING ===============*/
 .rating {
   background-color: var(--dark-blue);
@@ -71,6 +77,15 @@ p {
 .icon-star {
   width: 15px;
   height: 15px;
+}
+
+@media only screen and (max-width: 375px) {
+  .rating {
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 15px;
+    padding: 20px;
+  }
 }
 
 /*=============== NUMBER ===============*/
@@ -149,4 +164,14 @@ p {
   background-color: var(--very-dark-blue);
   padding: 8px 16px;
   border-radius: 20px;
+}
+
+@media only screen and (max-width: 375px) {
+  .thank-you {
+    margin-top: 10px;
+  }
+
+  .star-selected {
+    margin-bottom: 15px;
+  }
 }
