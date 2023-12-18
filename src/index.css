@@ -93,6 +93,11 @@ p {
   background-color: var(--medium-grey);
 }
 
+.active {
+  color: var(--white);
+  background-color: var(--medium-grey);
+}
+
 .submit {
   font-family: inherit;
   font-size: 0.95rem;
