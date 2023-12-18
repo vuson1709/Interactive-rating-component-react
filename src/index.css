@@ -99,6 +99,16 @@ p {
   background-color: var(--medium-grey);
 }
 
+.active {
+  color: var(--white);
+  background-color: var(--medium-grey);
+}
+
+.active {
+  color: var(--white);
+  background-color: var(--medium-grey);
+}
+
 .submit:hover {
   color: var(--orange);
   background-color: var(--white);

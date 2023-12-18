@@ -9,25 +9,33 @@ import IconStar from "./images/icon-star.svg";
 import ImgThankYou from "./images/illustration-thank-you.svg";
 
 export default function Rating() {
+  const [tempRating, setTempRating] = useState(null);
   const [rating, setRating] = useState(null);
-  const [actualRating, setActualRating] = useState(null);
+
+  function handleTempRating(i) {
+    setTempRating(i);
+  }
+
+  function handleRating() {
+    setRating(tempRating);
+  }
 
   return (
     <div className="rating">
-      {actualRating ? (
-        <DisplayThankYou actualRating={actualRating} />
+      {rating ? (
+        <DisplayThankYou rating={rating} />
       ) : (
         <DisplayRating
-          rating={rating}
-          setRating={setRating}
-          setActualRating={setActualRating}
+          tempRating={tempRating}
+          onTempRating={handleTempRating}
+          onRating={handleRating}
         />
       )}
     </div>
   );
 }
 
-function DisplayRating({ rating, setRating, setActualRating }) {
+function DisplayRating({ onTempRating, tempRating, onRating }) {
   return (
     <>
       <div className="circle">
@@ -39,21 +47,20 @@ function DisplayRating({ rating, setRating, setActualRating }) {
         appreciated to help us improve our offering!
       </p>
 
-      <Numbers rating={rating} setRating={setRating} />
-      <button className="btn submit" onClick={() => setActualRating(rating)}>
-        Submit
-      </button>
+      <RatingNumbers
+        onTempRating={onTempRating}
+        tempRating={tempRating}
+        onRating={onRating}
+      />
     </>
   );
 }
 
-function DisplayThankYou({ actualRating }) {
+function DisplayThankYou({ rating }) {
   return (
     <div className="thank-you">
       <img src={ImgThankYou} alt="Thank you" />
-      <span className="star-selected">
-        You selected {actualRating} out of 5
-      </span>
+      <span className="star-selected">You selected {rating} out of 5</span>
       <h2>Thank you!</h2>
       <p>
         We appreciate you taking the time to give a rating. If you ever need
@@ -63,39 +70,23 @@ function DisplayThankYou({ actualRating }) {
   );
 }
 
-function Numbers({ rating, setRating }) {
+function RatingNumbers({ onTempRating, tempRating, onRating }) {
   return (
-    <form className="numbers">
-      <span
-        className={`circle ${rating === 1 ? "active" : ""}`}
-        onClick={() => setRating(1)}
-      >
-        1
-      </span>
-      <span
-        className={`circle ${rating === 2 ? "active" : ""}`}
-        onClick={() => setRating(2)}
-      >
-        2
-      </span>
-      <span
-        className={`circle ${rating === 3 ? "active" : ""}`}
-        onClick={() => setRating(3)}
-      >
-        3
-      </span>
-      <span
-        className={`circle ${rating === 4 ? "active" : ""}`}
-        onClick={() => setRating(4)}
-      >
-        4
-      </span>
-      <span
-        className={`circle ${rating === 5 ? "active" : ""}`}
-        onClick={() => setRating(5)}
-      >
-        5
-      </span>
-    </form>
+    <>
+      <div className="numbers">
+        {Array.from({ length: 5 }, (_, i) => (
+          <span
+            className={`circle ${tempRating === i + 1 ? "active" : ""}`}
+            onClick={() => onTempRating(i + 1)}
+            key={i}
+          >
+            {i + 1}
+          </span>
+        ))}
+      </div>
+      <button className="btn submit" onClick={onRating}>
+        Submit
+      </button>
+    </>
   );
 }
